@@ -9,15 +9,18 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String        @id @default(cuid())
+  email         String        @unique
   name          String?
   emailVerified Boolean
+  creditScore   Int           @default(50) // Optional, related to your weightage system
+  balance       BigInt        @default(0)
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  Transaction   Transaction[]
 
   @@map("user")
 }
@@ -65,4 +68,30 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model TokenPool {
+  id          Int      @id @default(autoincrement())
+  totalTokens BigInt   @default(100000000000) // 100 billion tokens
+  allocated   BigInt   @default(0) // Allocated tokens
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Transaction {
+  id        Int             @id @default(autoincrement())
+  userId    String
+  type      TransactionType
+  amount    BigInt // Number of tokens transferred
+  createdAt DateTime        @default(now())
+  note      String? // Optional note or reason for the transaction
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum TransactionType {
+  ALLOCATION // Allocating tokens to a user
+  TRANSFER // User-to-user transfer
+  WITHDRAWAL // Tokens removed or burned
+  REWARD // Reward for activity
 }

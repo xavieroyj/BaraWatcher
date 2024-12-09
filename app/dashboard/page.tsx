@@ -1,3 +1,6 @@
+'use client'
+
+import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import {
   Table,
@@ -59,6 +62,8 @@ function getStatusColor(status: string) {
 }
 
 export default function DashboardPage() {
+  const router = useRouter()
+
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Flagged Content Dashboard</h1>
@@ -78,7 +83,11 @@ export default function DashboardPage() {
           </TableHeader>
           <TableBody>
             {flaggedItems.map((item) => (
-              <TableRow key={item.id}>
+              <TableRow 
+                key={item.id}
+                className="cursor-pointer hover:bg-gray-50"
+                onClick={() => router.push(`/dashboard/notes/${item.id}`)}
+              >
                 <TableCell className="max-w-[300px] truncate">
                   {item.content}
                 </TableCell>
