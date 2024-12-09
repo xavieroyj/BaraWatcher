@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { SearchIcon } from "lucide-react";
+import LottieAnimation from "@/app/components/lottie";
+import baraAnimation from "@/app/images/bara.json";
 
 export default function HeroSection() {
   return (
@@ -23,6 +25,11 @@ export default function HeroSection() {
             <Button className="h-[50px] w-[50px] rounded-full bg-blue-300 hover:bg-blue-600">
               <SearchIcon />
             </Button>
+          </div>
+        </div>
+        <div className="releative flex justify-start items-center">
+          <div className="absolute w-[25%]">
+            <LottieAnimation animationdata={baraAnimation} />
           </div>
         </div>
       </div>

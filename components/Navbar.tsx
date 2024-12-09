@@ -15,7 +15,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-black shadow-md sticky top-0 z-10">
+    <nav className="bg-black shadow-md sticky top-2 mx-5 z-10 rounded-xl">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/">
           <div className="flex items-center">
