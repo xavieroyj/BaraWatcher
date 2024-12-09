@@ -27,7 +27,7 @@ export default function HeroSection() {
       <div className="relative my-5 flex justify-center items-center">
         <div className="flex max-w-[55%] w-full h-[60px] rounded-full border border-gray-300">
           <Input
-            className="flex-grow h-full rounded-l-full focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-none shadow-none"
+            className="flex-grow h-full rounded-l-full focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-none shadow-none hover:cursor-pointer"
             placeholder="Fact Check"
             onClick={() => router.push("/login")}
           />
