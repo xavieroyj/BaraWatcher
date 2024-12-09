@@ -24,6 +24,28 @@ model User {
   @@map("user")
 }
 
+enum ValidationRequestStatus {
+  PENDING
+  VALIDATED
+  REJECTED
+}
+
+enum ValidationRequestType {  
+  SITE
+  CONTENT
+  IMAGE
+}
+
+// The request to validate whether the site/content/image is a scam
+model ValidationRequest {
+  id            Int       @id @default(autoincrement())
+  status        ValidationRequestStatus
+  type          ValidationRequestType
+  content       String
+  createdAt     DateTime
+  updatedAt     DateTime
+}
+
 model Session {
   id        String   @id
   expiresAt DateTime

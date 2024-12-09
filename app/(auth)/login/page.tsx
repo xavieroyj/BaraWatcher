@@ -72,10 +72,7 @@ export default function LoginPage() {
             setIsLoading(true);
             const { data, error } = await authClient.signIn.social({
                 provider: "google",
-            }, {
-                onSuccess: () => {
-                    router.push("/dashboard");
-                },
+                callbackURL: "/dashboard",
             });
 
             if (error) throw error;
@@ -84,9 +81,6 @@ export default function LoginPage() {
             form.setError("root", {
                 message: "Google sign in failed",
             });
-        } finally {
-            router.push("/dashboard");
-            setIsLoading(false);
         }
     };
 
