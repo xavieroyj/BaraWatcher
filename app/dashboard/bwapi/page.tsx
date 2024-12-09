@@ -26,8 +26,8 @@ const documentationLinks = [
 
 export default function ApiTester() {
   const [selectedApi, setSelectedApi] = useState(apiOptions[0].endpoint)
-  const [params, setParams] = useState('')
-  const [method, setMethod] = useState('GET')
+  const [params, setParams] = useState<string | FormData>('')
+  const [method, setMethod] = useState('POST')
   const [response, setResponse] = useState('')
   const [quota, setQuota] = useState<{ used: number; total: number } | null>(null)
   const [quotaError, setQuotaError] = useState<string | null>(null)
@@ -37,15 +37,22 @@ export default function ApiTester() {
   }, [])
 
   const fetchQuota = async () => {
-    setQuota({ used: 0, total: 10 })
+    setQuota({ used: 0, total: 1000 })
+  }
+
+  let sampleResponse = {
+    "note": "During and after his term as President of the United States, Donald Trump made tens of thousands of false or misleading claims.",
+    "source": "https://en.wikipedia.org/wiki/False_or_misleading_statements_by_Donald_Trump",
+    "date": "2021-10-10",
+    "confidence": 0.9
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setResponse('Loading...')
-
-    
-    setResponse('Response data here')
+    setTimeout(async () => {
+    }, 1000)
+    setResponse(JSON.stringify(sampleResponse, null, 2));
   }
 
   return (
@@ -53,7 +60,7 @@ export default function ApiTester() {
       <h1 className="text-3xl font-bold mb-6">API Tester</h1>
       
       {/* Quota display */}
-      <div className="mb-6 p-4 bg-white rounded-lg shadow-md">
+      <div className="mb-6 p-4 bg-white rounded-lg shadow-lg">
         <h2 className="text-xl font-semibold mb-2">API Quota</h2>
         {quotaError ? (
           <Alert variant="destructive">
@@ -95,7 +102,11 @@ export default function ApiTester() {
             </SelectTrigger>
             <SelectContent>
               {apiOptions.map((option) => (
-                <SelectItem key={option.endpoint} value={option.endpoint}>
+                <SelectItem
+                  key={option.endpoint}
+                  value={option.endpoint}
+                  onClick={() => setParams('')}
+                >
                   {option.name}
                 </SelectItem>
               ))}
@@ -110,25 +121,45 @@ export default function ApiTester() {
               <SelectValue placeholder="Select HTTP method" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="GET">GET</SelectItem>
+{/*               <SelectItem value="GET">GET</SelectItem> */}
               <SelectItem value="POST">POST</SelectItem>
-              <SelectItem value="PUT">PUT</SelectItem>
-              <SelectItem value="DELETE">DELETE</SelectItem>
+{/*               <SelectItem value="PUT">PUT</SelectItem>
+              <SelectItem value="DELETE">DELETE</SelectItem> */}
             </SelectContent>
           </Select>
         </div>
 
-        <div>
-          <Label htmlFor="params">Query Parameters</Label>
-          <Input
-            id="params"
-            placeholder="e.g. id=1&name=John"
-            value={params}
-            onChange={(e) => setParams(e.target.value)}
-          />
-        </div>
+        {selectedApi === '/api/text' ? (
+          <div>
+            <Label htmlFor="params">Parameters</Label>
+            {typeof params === 'string' && (
+              <Textarea
+                id="params"
+                placeholder="Enter text parameters"
+                value={params}
+                onChange={(e) => setParams(e.target.value)}
+              />
+            )}
+          </div>
+        ) : (
+          <div>
+            <Label htmlFor="file">Upload File</Label>
+            <Input
+              id="file"
+              type="file"
+              onChange={(e) => {
+          const file = e.target.files?.[0]
+          if (file) {
+            const formData = new FormData()
+            formData.append('file', file)
+            setParams(formData)
+          }
+              }}
+            />
+          </div>
+        )}
 
-        <Button type="submit">Send Request</Button>
+        <Button type="submit" className='w-full' onClick={() => setQuota(prev => prev ? { ...prev, used: prev.used + 1 } : null)}>Send Request</Button>
       </form>
 
       <div className="mt-8 bg-white rounded-lg shadow-md p-4">

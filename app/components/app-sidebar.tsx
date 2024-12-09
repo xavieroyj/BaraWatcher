@@ -219,7 +219,7 @@ export function AppSidebar() {
                                 </div>
                             ) : (
                                 <Button
-                                    className="w-full"
+                                    className="w-full border border-orange-300 bg-white text-black"
                                     onClick={connectMetaMask}
                                     disabled={isConnecting}
                                 >
