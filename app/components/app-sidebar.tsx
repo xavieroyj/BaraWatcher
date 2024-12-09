@@ -11,7 +11,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Book, Home, History } from "lucide-react"
+import { Book, Home, History, Settings } from "lucide-react"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -25,6 +25,11 @@ const items = [
 		title: "History",
 		path: "/dashboard/history",
 		icon: History
+	},
+	{
+		title: "Settings",
+		path: "/dashboard/settings",
+		icon: Settings
 	}
 ];
 
