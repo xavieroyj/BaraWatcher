@@ -13,16 +13,29 @@ model User {
   email         String        @unique
   name          String?
   emailVerified Boolean
-  creditScore   Int           @default(50) // Optional, related to your weightage system
-  balance       BigInt        @default(0)
+  creditScore   Int
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
-  Transaction   Transaction[]
 
   @@map("user")
+  Wallet Wallet[]
+}
+
+// Every user can connect to one metamask wallet
+model Wallet {
+  id            String   @id
+  address       String
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isConnected   Boolean  @default(true)
+  connectedAt   DateTime @default(now())
+  lastActive    DateTime @updatedAt
+
+  @@unique([address])
+  @@map("wallet")
 }
 
 model Session {
@@ -59,39 +72,29 @@ model Account {
   @@map("account")
 }
 
-model Verification {
-  id         String    @id
-  identifier String
-  value      String
-  expiresAt  DateTime
-  createdAt  DateTime?
-  updatedAt  DateTime?
+model Note {
+  id               Int           @id @default(autoincrement())
+  content         String
+  type           String
+  status         String        @default("pending")
+  credibilityScore Int
+  imageUrl       String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  comments       NoteComment[]
 
-  @@map("verification")
+  @@map("note")
 }
 
-model TokenPool {
-  id          Int      @id @default(autoincrement())
-  totalTokens BigInt   @default(100000000000) // 100 billion tokens
-  allocated   BigInt   @default(0) // Allocated tokens
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
+model NoteComment {
+  id            Int      @id @default(autoincrement())
+  text          String
+  volunteerName String
+  date          DateTime
+  noteId        Int
+  note          Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-model Transaction {
-  id        Int             @id @default(autoincrement())
-  userId    String
-  type      TransactionType
-  amount    BigInt // Number of tokens transferred
-  createdAt DateTime        @default(now())
-  note      String? // Optional note or reason for the transaction
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum TransactionType {
-  ALLOCATION // Allocating tokens to a user
-  TRANSFER // User-to-user transfer
-  WITHDRAWAL // Tokens removed or burned
-  REWARD // Reward for activity
+  @@map("note_comment")
 }
