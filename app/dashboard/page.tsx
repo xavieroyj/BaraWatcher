@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import {
   Table,
@@ -11,42 +12,23 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import { getNotes } from "@/app/actions/note"
+import { Loader2 } from "lucide-react"
 
-// This would come from your API
-const flaggedItems = [
-  {
-    id: 1,
-    content: "Is this claim about AI true?",
-    type: "question",
-    status: "pending",
-    credibilityScore: 45,
-    requestCount: 3,
-    submissionDate: "2024-01-10",
-    notes: [
-      {
-        id: 1,
-        text: "This needs verification from AI experts",
-        volunteerName: "John Doe",
-      }
-    ]
-  },
-  {
-    id: 2,
-    content: "https://example.com/suspicious-article",
-    type: "link",
-    status: "debunked",
-    credibilityScore: 15,
-    requestCount: 8,
-    submissionDate: "2024-01-09",
-    notes: [
-      {
-        id: 2,
-        text: "Article contains misleading information",
-        volunteerName: "Jane Smith",
-      }
-    ]
-  },
-]
+interface Note {
+  id: number
+  content: string
+  type: string
+  status: string
+  credibilityScore: number
+  createdAt: Date
+  comments: Array<{
+    id: number
+    text: string
+    volunteerName: string
+    date: Date
+  }>
+}
 
 function getStatusColor(status: string) {
   switch (status) {
@@ -63,6 +45,45 @@ function getStatusColor(status: string) {
 
 export default function DashboardPage() {
   const router = useRouter()
+  const [notes, setNotes] = useState<Note[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchNotes() {
+      try {
+        setIsLoading(true)
+        const result = await getNotes()
+        if (result.error) {
+          throw new Error(result.error)
+        }
+        setNotes(result.notes ?? [])
+      } catch (err) {
+        console.error('Error fetching notes:', err)
+        setError(err instanceof Error ? err.message : 'Failed to fetch notes')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchNotes()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-red-600 min-h-[200px] flex items-center justify-center">
+        {error}
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4">
@@ -78,41 +99,41 @@ export default function DashboardPage() {
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Credibility Score</TableHead>
-              <TableHead>Requests</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Latest Note</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {flaggedItems.map((item) => (
+            {notes.map((note) => (
               <TableRow 
-                key={item.id}
+                key={note.id}
                 className="cursor-pointer hover:bg-gray-50"
-                onClick={() => router.push(`/dashboard/notes/${item.id}`)}
+                onClick={() => router.push(`/dashboard/notes/${note.id}`)}
               >
                 <TableCell className="max-w-[300px] truncate">
-                  {item.content}
+                  {note.content}
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline">{item.type}</Badge>
+                  <Badge variant="outline">{note.type}</Badge>
                 </TableCell>
                 <TableCell>
-                  <Badge>{item.status}</Badge>
+                  <Badge>{note.status}</Badge>
                 </TableCell>
                 <TableCell>
                   <span className={`font-medium ${
-                    item.credibilityScore < 50 ? 'text-red-500' : 'text-green-500'
+                    note.credibilityScore < 50 ? 'text-red-500' : 'text-green-500'
                   }`}>
-                    {item.credibilityScore}%
+                    {note.credibilityScore}%
                   </span>
                 </TableCell>
-                <TableCell>{item.requestCount}</TableCell>
-                <TableCell>{item.submissionDate}</TableCell>
+                <TableCell>{new Date(note.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell className="max-w-[300px]">
-                  <div className="truncate">
-                    <p className="text-sm text-gray-500">{item.notes[0]?.text}</p>
-                    <p className="text-xs text-gray-400">by {item.notes[0]?.volunteerName}</p>
-                  </div>
+                  {note.comments[0] && (
+                    <div className="truncate">
+                      <p className="text-sm text-gray-500">{note.comments[0].text}</p>
+                      <p className="text-xs text-gray-400">by {note.comments[0].volunteerName}</p>
+                    </div>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
