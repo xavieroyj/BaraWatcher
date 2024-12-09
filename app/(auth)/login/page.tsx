@@ -72,10 +72,13 @@ export default function LoginPage() {
             setIsLoading(true);
             const { data, error } = await authClient.signIn.social({
                 provider: "google",
+            }, {
+                onSuccess: () => {
+                    router.push("/dashboard");
+                },
             });
 
             if (error) throw error;
-            router.push("/dashboard");
         } catch (error) {
             console.error(error);
             form.setError("root", {

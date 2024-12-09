@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ArrowDownUp, DotIcon } from "lucide-react"
+import { ArrowDownUp, EllipsisVertical } from "lucide-react"
 
 // Sample data for the table
 const scamReports = [
@@ -169,7 +169,7 @@ export default function ScamDetectionTable() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="h-8 w-8 p-0">
                         <span className="sr-only">Open menu</span>
-                        <DotIcon className="h-4 w-4" />
+                        <EllipsisVertical className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">

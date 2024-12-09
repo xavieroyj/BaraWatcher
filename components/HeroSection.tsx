@@ -4,9 +4,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { SearchIcon } from "lucide-react";
-import LottieAnimation from "@/app/components/lottie";
+import dynamic from 'next/dynamic';
 import baraAnimation from "@/app/images/bara.json";
 import { useRouter } from "next/navigation";
+
+const LottieAnimation = dynamic(() => import("@/app/components/lottie"), { 
+  ssr: false,
+  loading: () => <div className="w-full h-full animate-pulse bg-gray-200 rounded-full" />
+});
 
 export default function HeroSection() {
   const router = useRouter();

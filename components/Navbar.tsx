@@ -5,15 +5,21 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Logo from '@/app/images/logowhite.png'
 import { usePathname } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
 
 export default function Navbar() {
   const pathname = usePathname();
   const isDashboardRoute = pathname.includes("dashboard");
   const isLoginRoute = pathname.includes("login");
   const isRegisterRoute = pathname.includes("register");
+  const { 
+    data: session, 
+    isPending,
+    error
+  } = authClient.useSession() 
 
   if (isDashboardRoute || isLoginRoute || isRegisterRoute) { 
-    return null; // Do not render the Navbar if the route includes "dashboard"
+    return null;
   }
 
   return (
@@ -25,12 +31,25 @@ export default function Navbar() {
             <span className="text-2xl font-bold text-white">BaraWatcher</span>
           </div>
         </Link>
-        <div>
-          <Link href="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
+        <div className="space-x-4">
+          {isPending ? (
+            <Button variant="outline" disabled>Loading...</Button>
+          ) : session ? (
+            <Link href="/dashboard">
+              <Button variant="outline">Dashboard</Button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="outline">Login</Button>
+              </Link>
+              <Link href="/register">
+                <Button variant="default">Sign Up</Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
   )
-} 
+}
