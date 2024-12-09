@@ -1,7 +1,9 @@
+import ScamDetectionTable from "./components/detection-table";
+
 export default function Dashboard() {
   return (
   <div>
-    Hello
+      <ScamDetectionTable/>
     </div>
     )
 }

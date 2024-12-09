@@ -1,11 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { SearchIcon } from "lucide-react";
 import LottieAnimation from "@/app/components/lottie";
 import baraAnimation from "@/app/images/bara.json";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <section className="mx-auto px-4 py-20 text-center bg-slate-100">
       <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl fade-in">
@@ -22,7 +26,7 @@ export default function HeroSection() {
             placeholder="Search for a company"
           />
           <div className="flex justify-center items-center p-1">
-            <Button className="h-[50px] w-[50px] rounded-full bg-blue-300 hover:bg-blue-600">
+            <Button className="h-[50px] w-[50px] rounded-full bg-blue-300 hover:bg-blue-600" onClick={() =>  {router.push('/login')}}>
               <SearchIcon />
             </Button>
           </div>

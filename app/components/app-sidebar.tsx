@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
+import { useRouter } from 'next/navigation'
 import {
     Sidebar,
     SidebarContent,
@@ -19,8 +19,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/app/images/logowhite.png";
 import Image from "next/image";
-import { useWallet } from "@/hooks/useWallet";
+import { ethers } from "ethers";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
 
 const items = [
     {
@@ -29,68 +30,50 @@ const items = [
         icon: Home,
     },
     {
-        title: "History",
-        path: "/dashboard/history",
+        title: "Bara API",
+        path: "/dashboard/bwapi",
         icon: History,
-    },
-    {
-        title: "Settings",
-        path: "/dashboard/settings",
-        icon: Settings,
     },
 ];
 
 export function AppSidebar() {
     const pathname = usePathname();
+    const [address, setAddress] = useState<string | null>(null);
+    const [isConnecting, setIsConnecting] = useState(false);
+    const router = useRouter();
+    let provider: any;
 
-    const {
-        connectWallet,
-        disconnectWallet,
-        getConnectedWallets,
-        isConnecting,
-        error,
-        isPending,
-    } = useWallet();
-    const [connectedWallet, setConnectedWallet] = useState<{
-        address: string;
-        isConnected: boolean;
-    } | null>(null);
-
-    useEffect(() => {
-        const fetchWallets = async () => {
-            const wallets = await getConnectedWallets();
-            const activeWallet = wallets.find((w) => w.isConnected);
-            if (activeWallet) {
-                setConnectedWallet({
-                    address: activeWallet.address,
-                    isConnected: activeWallet.isConnected,
-                });
+    async function connectMetaMask() {
+        setIsConnecting(true);
+        try {
+            if (window.ethereum == null) {
+                throw new Error("MetaMask not installed");
             }
-        };
 
-        if (!isPending) {
-            fetchWallets();
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const accounts = await provider.send("eth_requestAccounts", []);
+            const address = accounts[0];
+            setAddress(address);
+        } catch (error) {
+            console.error("Error connecting to MetaMask:", error);
+        } finally {
+            setIsConnecting(false);
         }
-    }, [getConnectedWallets, isPending]);
+    }
 
-    const handleConnect = async () => {
-        const wallet = await connectWallet();
-        if (wallet) {
-            setConnectedWallet({
-                address: wallet.address,
-                isConnected: wallet.isConnected,
-            });
-        }
+    const disconnectWallet = () => {
+        setAddress(null);
     };
 
-    const handleDisconnect = async () => {
-        if (connectedWallet) {
-            const success = await disconnectWallet(connectedWallet.address);
-            if (success) {
-                setConnectedWallet(null);
-            }
-        }
-    };
+    const logout = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+              onSuccess: () => {
+                router.push("/"); // redirect to login page
+              },
+            },
+          });
+    }
 
     return (
         <Sidebar>
@@ -98,14 +81,14 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="#">
-                                <div className="flex items-center">
+                            <a href="/">
+                                <div className="flex items-center space-x-2">
                                     <Image
                                         src={Logo}
                                         alt="Logo"
-                                        width={55}
-                                        height={55}
-                                        className="-mr-1"
+                                        width={38}
+                                        height={30}
+                                        className="-mr-50"
                                     />
                                     <span className="text-xl font-bold text-black">
                                         BaraWatcher
@@ -161,32 +144,29 @@ export function AppSidebar() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            {error && (
-                                <p className="text-center text-red-600 text-sm">
-                                    {/* {error} */}
-                                </p>
-                            )}
-
-                            {connectedWallet ? (
+                            {address ? (
                                 <div className="space-y-2">
                                     <p className="text-center text-green-600">
                                         Wallet Connected:
                                         <span className="font-mono text-sm block mt-1">
-                                            {connectedWallet.address}
+                                            {`${address.slice(
+                                                0,
+                                                6
+                                            )}...${address.slice(-4)}`}
                                         </span>
                                     </p>
                                     <Button
-                                        onClick={handleDisconnect}
                                         variant="destructive"
                                         className="w-full"
+                                        onClick={disconnectWallet}
                                     >
                                         Disconnect Wallet
                                     </Button>
                                 </div>
                             ) : (
                                 <Button
-                                    onClick={handleConnect}
                                     className="w-full"
+                                    onClick={connectMetaMask}
                                     disabled={isConnecting}
                                 >
                                     {isConnecting ? (
@@ -202,6 +182,11 @@ export function AppSidebar() {
                         </CardContent>
                     </Card>
                 </div>
+                <SidebarMenu>
+                    <SidebarMenuButton asChild>
+                        <Button onClick={logout}>Logout</Button>
+                    </SidebarMenuButton>
+                </SidebarMenu>
             </SidebarFooter>
         </Sidebar>
     );

@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/">
           <div className="flex items-center">
-            <Image src={Logo} alt="Logo" width={80} height={80} className="-mr-3" />
+            <Image src={Logo} alt="Logo" width={30} height={80} className="mr-3" />
             <span className="text-2xl font-bold text-white">BaraWatcher</span>
           </div>
         </Link>
