@@ -23,7 +23,8 @@ export default function HeroSection() {
         <div className="flex max-w-[55%] w-full h-[60px] rounded-full border border-gray-300">
           <Input
             className="flex-grow h-full rounded-l-full focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-none shadow-none"
-            placeholder="Search for a company"
+            placeholder="Fact Check"
+            onClick={() => router.push("/login")}
           />
           <div className="flex justify-center items-center p-1">
             <Button className="h-[50px] w-[50px] rounded-full bg-blue-300 hover:bg-blue-600" onClick={() =>  {router.push('/login')}}>
@@ -31,7 +32,7 @@ export default function HeroSection() {
             </Button>
           </div>
         </div>
-        <div className="releative flex justify-start items-center">
+        <div className="flex justify-start items-center">
           <div className="absolute w-[25%]">
             <LottieAnimation animationdata={baraAnimation} />
           </div>

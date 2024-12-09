@@ -41,7 +41,14 @@ export function AppSidebar() {
     const [address, setAddress] = useState<string | null>(null);
     const [isConnecting, setIsConnecting] = useState(false);
     const router = useRouter();
-    let provider: any;
+
+    const handleAccountsChanged = (accounts: string[]) => {
+        if (accounts.length === 0) {
+            setAddress(null);
+        } else {
+            setAddress(accounts[0]);
+        }
+    };
 
     async function connectMetaMask() {
         setIsConnecting(true);
@@ -52,8 +59,11 @@ export function AppSidebar() {
 
             const provider = new ethers.BrowserProvider(window.ethereum);
             const accounts = await provider.send("eth_requestAccounts", []);
-            const address = accounts[0];
-            setAddress(address);
+            setAddress(accounts[0]);
+
+            // Add account change listener
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+            
         } catch (error) {
             console.error("Error connecting to MetaMask:", error);
         } finally {
@@ -61,9 +71,53 @@ export function AppSidebar() {
         }
     }
 
-    const disconnectWallet = () => {
-        setAddress(null);
+    const disconnectWallet = async () => {
+        try {
+            if (window.ethereum) {
+                window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+                
+                await window.ethereum.request({
+                    method: "wallet_requestPermissions",
+                    params: [{
+                        eth_accounts: {}
+                    }]
+                });
+            }
+            setAddress(null);
+        } catch (error) {
+            console.error("Error disconnecting wallet:", error);
+            setAddress(null);
+        }
     };
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (window.ethereum) {
+                window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+            }
+        };
+    }, []);
+
+    // Check if wallet is already connected on mount
+    useEffect(() => {
+        const checkConnection = async () => {
+            if (window.ethereum) {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                try {
+                    const accounts = await provider.listAccounts();
+                    if (accounts.length > 0) {
+                        setAddress(accounts[0].address);
+                        window.ethereum.on('accountsChanged', handleAccountsChanged);
+                    }
+                } catch (error) {
+                    console.error("Error checking wallet connection:", error);
+                }
+            }
+        };
+        
+        checkConnection();
+    }, []);
 
     const logout = async () => {
         await authClient.signOut({
