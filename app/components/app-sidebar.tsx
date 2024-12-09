@@ -29,11 +29,7 @@ const items = [
 	}
 ];
 
-interface AppSidebarProps {
-	user: any;
-}
-
-export function AppSidebar({ user }: AppSidebarProps) {
+export function AppSidebar() {
 	const pathname = usePathname();
 
 	return (
