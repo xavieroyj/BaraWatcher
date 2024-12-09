@@ -9,7 +9,7 @@ export default function HeroSection() {
   return (
     <section className="mx-auto px-4 py-20 text-center bg-slate-100">
       <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl fade-in">
-        <span>CombatMalfoy</span>
+        <span>BaraWatcher</span>
       </h1>
       <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto fade-in">
         A decentralized platform for identifying and combating scams through
