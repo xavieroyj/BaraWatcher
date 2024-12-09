@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
-import { SearchCheckIcon, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 
 export default function HeroSection() {
   return (
     <section className="mx-auto px-4 py-20 text-center bg-slate-100">
-      <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-        <span>ComabatMalfoy</span>
+      <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl fade-in">
+        <span>CombatMalfoy</span>
       </h1>
-      <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">
+      <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto fade-in">
         A decentralized platform for identifying and combating scams through
         community-driven peer reviews and trust scores.
       </p>
