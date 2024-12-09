@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useState } from 'react';
-import { ethers } from "ethers";
+// import { ethers } from "ethers";
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const SettingsPage = () => {
-  const provider = new ethers.BrowserProvider(window.ethereum);
+  // const provider = new ethers.BrowserProvider(window.ethereum);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const connectWallet = async () => {

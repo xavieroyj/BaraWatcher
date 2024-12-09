@@ -92,3 +92,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.hero-bg {
+  background-size: cover;
+  background-position: center;
+  height: 50vh; /* Example height */
+  width: 100%;   /* Full width */
+}
+
