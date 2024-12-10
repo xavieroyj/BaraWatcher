@@ -43,6 +43,8 @@ model ValidationRequest {
   content   String // The content to validate
   createdAt DateTime
   updatedAt DateTime
+
+  @@map("validation_request")
 }
 
 model Session {
