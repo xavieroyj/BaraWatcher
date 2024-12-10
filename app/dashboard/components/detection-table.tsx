@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ArrowDownUp, EllipsisVertical } from "lucide-react"
 import { format } from "date-fns"
+import router, { useRouter } from "next/navigation"
 
 interface ValidationRequest {
   id: number;
@@ -56,6 +57,12 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
       setSortDirection("asc");
     }
   };
+  
+  const router = useRouter();
+
+  const handleNavigation = (id: number) => {
+    router.push(`dashboard/notes/${id}`); // Programmatically navigate to the dynamic route
+  };
 
   return (
     <div className="container mx-auto py-10">
@@ -88,7 +95,7 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
           </TableHeader>
           <TableBody>
             {sortedRequests.map((request) => (
-              <TableRow key={request.id}>
+              <TableRow key={request.id} onClick={()=> handleNavigation(request.id)}>
                 <TableCell className="font-medium">
                   {format(new Date(request.createdAt), 'MM/dd/yyyy')}
                 </TableCell>
