@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 
 interface Note {
-  id: number
+  id: number 
   text: string
   volunteerName: string
   date: string
