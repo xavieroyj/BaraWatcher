@@ -22,8 +22,14 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import path from "path";
 
 const items = [
+    {
+        title: "Home",
+        path: "/dashboard",
+        icon: Home,
+    },
     {
         title: "Bara API",
         path: "/dashboard/bwapi",
@@ -36,7 +42,7 @@ const items = [
     },
     {
         title: "Admin",
-        path: "/dashboard",
+        path: "/dashboard/admin",
         icon: Lock,
     },
 ];

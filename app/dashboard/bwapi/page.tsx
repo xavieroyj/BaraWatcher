@@ -100,8 +100,9 @@ export default function ApiTester() {
         <QuotaPurchaseOptions setQuota={setQuota} />
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white rounded-lg shadow-md p-4">
+      <form onSubmit={handleSubmit} className="space-y-4 bg-white rounded-lg shadow-md p-4 border-orange-700 border">
         <div>
+        <h2 className="text-xl font-semibold mb-4">Test API</h2>
           <Label htmlFor="api-select">Select API</Label>
           <Select value={selectedApi} onValueChange={setSelectedApi}>
             <SelectTrigger id="api-select">
@@ -169,7 +170,7 @@ export default function ApiTester() {
         <Button type="submit" className='w-full' onClick={() => setQuota(prev => prev ? { ...prev, used: prev.used + 1 } : null)}>Send Request</Button>
       </form>
 
-      <div className="mt-8 bg-white rounded-lg shadow-md p-4">
+      <div className="mt-4 bg-white rounded-lg shadow-md p-4">
         <Label htmlFor="response">Response</Label>
         <Textarea
           id="response"
