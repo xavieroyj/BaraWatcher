@@ -1,4 +1,3 @@
-
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -30,7 +29,7 @@ enum ValidationRequestStatus {
   REJECTED
 }
 
-enum ValidationRequestType {  
+enum ValidationRequestType {
   SITE
   CONTENT
   IMAGE
@@ -38,12 +37,12 @@ enum ValidationRequestType {
 
 // The request to validate whether the site/content/image is a scam
 model ValidationRequest {
-  id            Int       @id @default(autoincrement())
-  status        ValidationRequestStatus
-  type          ValidationRequestType
-  content       String // The content to validate
-  createdAt     DateTime
-  updatedAt     DateTime
+  id        Int                     @id @default(autoincrement())
+  status    ValidationRequestStatus
+  type      ValidationRequestType
+  content   String // The content to validate
+  createdAt DateTime
+  updatedAt DateTime
 }
 
 model Session {
@@ -68,28 +67,6 @@ model Account {
   userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
-  createdAt             DateTime
-  updatedAt             DateTime
-
-  @@map("account")
-}
-
-model Verification {
-  id         String    @id
-  identifier String
-  value      String
-  expiresAt  DateTime
-  createdAt  DateTime?
-  updatedAt  DateTime?
-
-  @@map("verification")
-}
   refreshToken          String?
   idToken               String?
   accessTokenExpiresAt  DateTime?

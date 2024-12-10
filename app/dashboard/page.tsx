@@ -9,8 +9,4 @@ export default async function Dashboard() {
       <ScamDetectionTable validationRequests={validationRequests} />
     </div>
   );
-}   <div>
-        <ScamDetectionTable validationRequests={validationRequests} />
-    </div>
-  );
 }
