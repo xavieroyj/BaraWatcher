@@ -157,7 +157,7 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
                     }
                     className={
                       request.status === "PENDING"
-                      ? "bg-yellow-500"
+                      ? "bg-yellow-500 text-white"
                       : request.status === "IN_PROGRESS"
                       ? "bg-blue-800"
                       : "bg-green-600"
