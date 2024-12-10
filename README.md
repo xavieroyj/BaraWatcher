@@ -46,11 +46,11 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Contributors
-Ryan Chua: [@Ryanchuaks1](https://www.github.com/Ryanchuaks1)
-Ariel Yong: [@arielyongg](https://www.github.com/arielyongg)
-Adrian Pang: [@skyish242](https://github.com/skyish242)
-Teo Zhi Kai: [kaiii299](https://www.github.com/kaiii299)
-Xavier Ong: [@xavieroyj](https://github.com/xavieroyj)
+- Ryan Chua: [@Ryanchuaks1](https://www.github.com/Ryanchuaks1)
+- Ariel Yong: [@arielyongg](https://www.github.com/arielyongg)
+- Adrian Pang: [@skyish242](https://github.com/skyish242)
+- Teo Zhi Kai: [kaiii299](https://www.github.com/kaiii299)
+- Xavier Ong: [@xavieroyj](https://github.com/xavieroyj)
 
 
 ### Note
