@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { 
+import {
   Table,
   TableBody,
   TableCell,
@@ -22,6 +22,8 @@ import {
 import { ArrowDownUp, EllipsisVertical } from "lucide-react"
 import { format } from "date-fns"
 import router, { useRouter } from "next/navigation"
+import { rejectRequest, validateRequest } from "@/app/actions/validationRequest"
+import { useToast } from "@/hooks/use-toast"
 
 interface ValidationRequest {
   id: number;
@@ -38,6 +40,8 @@ interface Props {
 
 export default function ScamDetectionTable({ validationRequests }: Props) {
   const [sortColumn, setSortColumn] = useState<string | null>(null);
+  const { toast } = useToast();
+  const [loading, setLoading] = useState<number | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const sortedRequests = [...validationRequests].sort((a, b) => {
@@ -57,7 +61,43 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
       setSortDirection("asc");
     }
   };
-  
+
+  const handleValidate = async (id: number) => {
+    setLoading(id)
+    const result = await validateRequest(id)
+    if (result.success) {
+      toast({
+        title: "Request Validated",
+        description: "The request has been validated successfully",
+      })
+      router.refresh()
+    } else {
+      toast({
+        title: "Failed to validate request",
+        description: result.error,
+      })
+    }
+    setLoading(null)
+  }
+
+  const handleReject = async (id: number) => {
+    setLoading(id)
+    const result = await rejectRequest(id)
+    if (result.success) {
+      toast({
+        title: "Request Rejected",
+        description: "The request has been rejected successfully",
+      });
+      router.refresh()
+    } else {
+      toast({
+        title: "Failed to reject request",
+        description: result.error,
+      });
+    }
+    setLoading(null)
+  }
+
   const router = useRouter();
 
   const handleNavigation = (id: number) => {
@@ -95,7 +135,7 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
           </TableHeader>
           <TableBody>
             {sortedRequests.map((request) => (
-              <TableRow key={request.id} onClick={()=> handleNavigation(request.id)}>
+              <TableRow key={request.id} onClick={() => handleNavigation(request.id)}>
                 <TableCell className="font-medium">
                   {format(new Date(request.createdAt), 'MM/dd/yyyy')}
                 </TableCell>
@@ -107,8 +147,8 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
                       request.status === "PENDING"
                         ? "outline"
                         : request.status === "IN_PROGRESS"
-                        ? "secondary"
-                        : "default"
+                          ? "secondary"
+                          : "default"
                     }
                   >
                     {request.status}
@@ -124,13 +164,30 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem onClick={() => navigator.clipboard.writeText(request.id.toString())}>
+                      <DropdownMenuItem
+                        onClick={() => navigator.clipboard.writeText(request.id.toString())}
+                      >
                         Copy request ID
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Review request</DropdownMenuItem>
-                      <DropdownMenuItem>Mark as resolved</DropdownMenuItem>
-                      <DropdownMenuItem>Dismiss request</DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleValidate(request.id);
+                        }}
+                        disabled={loading === request.id}
+                      >
+                        {loading === request.id ? "Processing..." : "Mark as Validated"}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleReject(request.id);
+                        }}
+                        disabled={loading === request.id}
+                      >
+                        {loading === request.id ? "Processing..." : "Mark as Rejected"}
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
