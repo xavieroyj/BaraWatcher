@@ -20,9 +20,9 @@ const apiOptions = [
 ]
 
 const documentationLinks = [
-  { title: 'Getting Started', description: 'Learn the basics of our API', link: '/docs/getting-started' },
-  { title: 'Authentication', description: 'Secure your API requests', link: '/docs/authentication' },
-  { title: 'Endpoints', description: 'Explore all available endpoints', link: '/docs/endpoints' },
+  { title: 'Getting Started', description: 'Learn the basics of our API', link: '/docs', btntxt: 'View Docs' },
+  { title: 'Authentication', description: 'Secure your API requests', link: '/docs', btntxt: 'View Docs'  },
+  { title: 'Contact', description: 'Contact us for more info', link: '/contact', btntxt: 'Contact Us'  },
 ]
 
 export default function ApiTester() {
@@ -69,7 +69,7 @@ export default function ApiTester() {
               <CardDescription>{doc.description}</CardDescription>
             </CardHeader>
             <Button className="m-4" variant="outline" asChild>
-              <a href={doc.link} target="_blank" rel="noopener noreferrer">View Docs</a>
+              <a href={doc.link} target="_blank" rel="noopener noreferrer">{doc.btntxt}</a>
             </Button>
           </Card>
         ))}

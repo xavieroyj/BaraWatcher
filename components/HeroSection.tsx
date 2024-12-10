@@ -49,7 +49,7 @@ export default function HeroSection() {
             Get Started
           </Button>
         </Link>
-        <Link href="/dashboard/settings">
+        <Link href="/dashboard">
           <Button variant="outline" size="lg" className="rounded-full">
             Connect Wallet
           </Button>
