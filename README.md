@@ -18,6 +18,9 @@ BaraWatcher is a decentralized platform that leverages community validators and 
 ## Presentation slides
 You may download and view our ppt slides [here](resources/BabyBara.pptx)
 
+## Presentation Video
+https://github.com/user-attachments/assets/ee90a02d-f7e3-4bb6-ad1b-282d0ada68d4
+
 ## Landing page
 ![Landing page image](resources/landing.gif)
 
