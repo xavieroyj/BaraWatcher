@@ -1,30 +1,19 @@
 "use client"
 import { useLottie } from "lottie-react";
-import { useEffect, useState } from "react";
 
 type Props = {
-    animationdata: any
+    animationdata:any
 };
 
-const LottieAnimation = ({ animationdata }: Props) => {
-    const [isMounted, setIsMounted] = useState(false);
+const lottieAnimation = ({animationdata}: Props) => {
+  const options = {
+    animationData: animationdata,
+    loop: true,
+  };
 
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+  const { View } = useLottie(options);
 
-    const options = {
-        animationData: animationdata,
-        loop: true,
-    };
-
-    const { View } = useLottie(options);
-
-    if (!isMounted) {
-        return null;
-    }
-
-    return <>{View}</>;
+  return <>{View}</>;
 };
 
-export default LottieAnimation;
+export default lottieAnimation;
