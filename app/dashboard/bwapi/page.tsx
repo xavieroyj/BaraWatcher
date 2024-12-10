@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from 'lucide-react'
 import { set } from 'date-fns'
+import { QuotaPurchaseOptions } from './quotapurchaseoptions'
 
 const apiOptions = [
   { name: 'Image', endpoint: '/api/image' },
@@ -37,7 +38,7 @@ export default function ApiTester() {
   }, [])
 
   const fetchQuota = async () => {
-    setQuota({ used: 0, total: 1000 })
+    setQuota({ used: 52, total: 1000 })
   }
 
   let sampleResponse = {
@@ -59,6 +60,21 @@ export default function ApiTester() {
     <div className="container mx-auto p-4 max-w-4xl">
       <h1 className="text-3xl font-bold mb-6">API Tester</h1>
       
+      {/* Documentation cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {documentationLinks.map((doc, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <CardTitle>{doc.title}</CardTitle>
+              <CardDescription>{doc.description}</CardDescription>
+            </CardHeader>
+            <Button className="m-4" variant="outline" asChild>
+              <a href={doc.link} target="_blank" rel="noopener noreferrer">View Docs</a>
+            </Button>
+          </Card>
+        ))}
+      </div>
+
       {/* Quota display */}
       <div className="mb-6 p-4 bg-white rounded-lg shadow-lg">
         <h2 className="text-xl font-semibold mb-2">API Quota</h2>
@@ -78,19 +94,10 @@ export default function ApiTester() {
         )}
       </div>
 
-      {/* Documentation cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {documentationLinks.map((doc, index) => (
-          <Card key={index}>
-            <CardHeader>
-              <CardTitle>{doc.title}</CardTitle>
-              <CardDescription>{doc.description}</CardDescription>
-            </CardHeader>
-            <Button className="m-4" variant="outline" asChild>
-              <a href={doc.link} target="_blank" rel="noopener noreferrer">View Docs</a>
-            </Button>
-          </Card>
-        ))}
+      {/* Quota Purchase Options */}
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold mb-4">Purchase Additional Quota</h2>
+        <QuotaPurchaseOptions setQuota={setQuota} />
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-4 bg-white rounded-lg shadow-md p-4">

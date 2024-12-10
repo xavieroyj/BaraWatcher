@@ -37,9 +37,9 @@ export default function HeroSection() {
             </Button>
           </div>
         </div>
-        <div className="relative flex justify-start items-center">
-          <div className="absolute w-[25%]">
-            <LottieAnimation animationdata={baraAnimation} />
+        <div className="flex justify-start items-center">
+          <div className="absolute w-[25%] mr-4">
+            <LottieAnimation animationdata={baraAnimation}/>
           </div>
         </div>
       </div>

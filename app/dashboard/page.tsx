@@ -1,12 +1,15 @@
-import ScamDetectionTable from "./components/detection-table";
 import { getValidationRequests } from "../actions/validationRequest";
+import ScamDetectionTable from "./components/detection-table";
 
 export default async function Dashboard() {
   const validationRequests = await getValidationRequests();
-  console.log(validationRequests);
 
   return (
     <div>
+      <ScamDetectionTable validationRequests={validationRequests} />
+    </div>
+  );
+}   <div>
         <ScamDetectionTable validationRequests={validationRequests} />
     </div>
   );
