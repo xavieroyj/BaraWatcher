@@ -133,12 +133,8 @@ export default function NotePage({ params }: { params: { id: string } }) {
           <h2 className="text-xl font-semibold">Content Preview</h2>
           <div className="relative aspect-video w-full overflow-hidden rounded-lg">
             {
-              requestData.type != "IMAGE" ? 
-              <FileUpload
-                file={selectedFile}
-                onFileSelect={handleFileSelect}
-                onRemove={handleFileRemove}
-              /> : <Image src={requestData.content} alt="image" className="w-full h-full" width={100} height={100}/>
+              requestData.type != "IMAGE" ? <div>No image to display</div>
+              : <Image src={requestData.content} alt="image" className="w-full h-full" width={100} height={100}/>
             }
           </div>
           <div className="space-y-4">
