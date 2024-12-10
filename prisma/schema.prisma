@@ -41,7 +41,7 @@ model ValidationRequest {
   id            Int       @id @default(autoincrement())
   status        ValidationRequestStatus
   type          ValidationRequestType
-  content       String
+  content       String // The content to validate
   createdAt     DateTime
   updatedAt     DateTime
 }
