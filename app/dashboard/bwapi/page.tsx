@@ -38,7 +38,7 @@ export default function ApiTester() {
   }, [])
 
   const fetchQuota = async () => {
-    setQuota({ used: 52, total: 1000 })
+    setQuota({ used: 512, total: 1000 })
   }
 
   let sampleResponse = {
