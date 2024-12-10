@@ -7,6 +7,7 @@ export async function GET(request: Request) {
 	return NextResponse.json(validationRequests);
 }
 
+
 export async function POST(request: Request) {
 	try {
 		const body = await request.json();

@@ -18,3 +18,15 @@ export async function createValidationRequest(data: {
 export async function getValidationRequests() {
   return await prisma.validationRequest.findMany();
 }
+
+export async function getValidationRequestById(id: number) {
+  try {
+    const validationRequest = await prisma.validationRequest.findUnique({
+      where: { id: id }, 
+    });
+    return validationRequest;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw error;
+  }
+}
