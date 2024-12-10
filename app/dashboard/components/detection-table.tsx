@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ArrowDownUp, EllipsisVertical } from "lucide-react"
+import { format } from "date-fns"
 
 interface ValidationRequest {
   id: number;
@@ -89,7 +90,7 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
             {sortedRequests.map((request) => (
               <TableRow key={request.id}>
                 <TableCell className="font-medium">
-                  {new Date(request.createdAt).toLocaleDateString()}
+                  {format(new Date(request.createdAt), 'MM/dd/yyyy')}
                 </TableCell>
                 <TableCell>{request.type}</TableCell>
                 <TableCell className="max-w-[300px] truncate">{request.content}</TableCell>
