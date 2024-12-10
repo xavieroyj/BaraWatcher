@@ -14,7 +14,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Home, History, Settings, Loader2 } from "lucide-react";
+import { Book, Home, History, Settings, Loader2, Lock } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/app/images/logowhite.png";
@@ -25,14 +25,19 @@ import { authClient } from "@/lib/auth-client";
 
 const items = [
     {
-        title: "Home",
-        path: "/dashboard",
-        icon: Home,
-    },
-    {
         title: "Bara API",
         path: "/dashboard/bwapi",
-        icon: History,
+        icon: Book,
+    },
+    {
+        title: "Validate",
+        path: "/dashboard/notes/1",
+        icon: Book,
+    },
+    {
+        title: "Admin",
+        path: "/dashboard",
+        icon: Lock,
     },
 ];
 

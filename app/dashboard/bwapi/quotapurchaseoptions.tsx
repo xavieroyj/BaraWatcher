@@ -2,11 +2,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/hooks/use-toast"
+import { ethers } from "ethers"
+import { Web3Provider } from "@ethersproject/providers"
 
 const quotaOptions = [
-  { amount: 10000, price: 9.99 },
-  { amount: 50000, price: 39.99 },
-  { amount: 100000, price: 69.99 },
+  { amount: 10, price: 0 },
+  { amount: 10000, price: 2.99 },
+  { amount: 50000, price: 13.99 },
 ]
 
 // Define the props type for the component
@@ -20,6 +22,17 @@ export function QuotaPurchaseOptions({ setQuota }: QuotaPurchaseOptionsProps) {
   const handlePurchase = async (amount: number, price: number) => {
     setIsPurchasing(true)
     try {
+      if (amount == 10) {
+
+      }
+      if (window.ethereum && amount > 10) {
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
+        console.log("Connected account:", accounts[0])
+        const provider = new Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const tx = await signer.sendTransaction({ to: accounts[0], value: 0 })
+        console.log("Transaction hash:", tx.hash)
+      }
       toast({
         title: "Purchase Successful",
         description: `You've added ${amount} requests to your quota.`,
