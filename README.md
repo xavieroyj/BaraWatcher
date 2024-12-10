@@ -1,9 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackathon Project for SIT Hackrift 2024
+
+## Problem Statement
+User-generated content often lacks verification, leading to the spread of misinformation
+- Content can appear credible but is factually incorrect.
+- Misinformation spreads quickly due to lack of oversight or validation.
+- Audiences may struggle to discern accurate from inaccurate information.
+
+## Solution (BaraWatcher)
+BaraWatcher is a decentralized platform that leverages community validators and trusted validators to collaboratively combat misinformation while ensuring transparency and fairness through smart contracts. Its cloud-based, scalable system incentivizes contributors with tokenized rewards and provides reliable, verified content via API integration.
+
+## Technology Stack
+- Next.JS App Router for the frontend and serverless function
+- Postgresql hosted by Supabase
+- Prisma ORM to connect to the database
+- Better-Auth as the authentication library
+
+## Presentation slides
+You may download and view our ppt slides [here](resources/BabyBara.pptx)
+
+## Landing page
+![Landing page image](resources/landing.gif)
+
+## Architecture Overview
+![Architecture overview](resources/architecture.png)
 
 ## Getting Started
-
-First, run the development server:
-
+1. Copy/rename `.env.sample` to `.env`
+2. Get the DATABASE_URL and DIRECT_URL from Supabase. You may follow the tutorial over [here](https://supabase.com/partners/integrations/prisma)
+3. Create a random key for Better-Auth
+4. `npm install` to install necessary libraries
+5. `npx prisma migrate dev` to generate necessary types and instantiate database if needed.
+6. Run the follow code below to start the development server
 ```bash
 npm run dev
 # or
@@ -13,24 +40,15 @@ pnpm dev
 # or
 bun dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributors
+Ryan Chua: [@Ryanchuaks1](https://www.github.com/Ryanchuaks1)
+Ariel Yong: [@arielyongg](https://www.github.com/arielyongg)
+Adrian Pang: [@skyish242](https://github.com/skyish242)
+Teo Zhi Kai: [kaiii299](https://www.github.com/kaiii299)
+Xavier Ong: [@xavieroyj](https://github.com/xavieroyj)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Note
+Special thanks to SITech Developers Club for hosting the event
