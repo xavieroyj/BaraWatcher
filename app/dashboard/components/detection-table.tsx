@@ -102,7 +102,7 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
   const router = useRouter();
 
   const handleNavigation = (id: number) => {
-    router.push(`dashboard/notes/${id}`); // Programmatically navigate to the dynamic route
+    router.push(`/dashboard/notes/${id}`); // Programmatically navigate to the dynamic route
   };
 
   const isAdminPage = pathname.endsWith("/admin"); // Check if the URL ends with /admin
@@ -145,19 +145,26 @@ export default function ScamDetectionTable({ validationRequests }: Props) {
                   {format(new Date(request.createdAt), "MM/dd/yyyy")}
                 </TableCell>
                 <TableCell>{request.type}</TableCell>
-                <TableCell className="max-w-[300px] truncate">{request.content}</TableCell>
+                <TableCell className="max-w-[560px] truncate">{request.content}</TableCell>
                 <TableCell>
-                  <Badge
+                    <Badge
                     variant={
                       request.status === "PENDING"
-                        ? "outline"
-                        : request.status === "IN_PROGRESS"
-                        ? "secondary"
-                        : "default"
+                      ? "outline"
+                      : request.status === "IN_PROGRESS"
+                      ? "secondary"
+                      : "default"
                     }
-                  >
+                    className={
+                      request.status === "PENDING"
+                      ? "bg-yellow-500"
+                      : request.status === "IN_PROGRESS"
+                      ? "bg-blue-800"
+                      : "bg-green-600"
+                    }
+                    >
                     {request.status}
-                  </Badge>
+                    </Badge>
                 </TableCell>
                 <TableCell className="text-right">
                   {isAdminPage && ( // Conditionally render the dropdown menu
