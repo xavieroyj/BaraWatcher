@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import { Divide, Upload, X } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import ValidationForm from "@/components/validation-form";
-import { Input } from "@/components/ui/input";
 import { getValidationRequestById } from "@/app/actions/validationRequest";
 import { useToast } from "@/hooks/use-toast";
 
@@ -85,6 +84,7 @@ export default function NotePage({ params }: { params: { id: string } }) {
           });
         }
       } catch (error) {
+        console.error(error);
         toast({
           title: "Error",
           description: "Failed to fetch validation request",
@@ -181,6 +181,11 @@ export default function NotePage({ params }: { params: { id: string } }) {
           // currentStatus={requestData.status}
         />
       </div>
+      <FileUpload
+        file={selectedFile}
+        onFileSelect={handleFileSelect}
+        onRemove={handleFileRemove}
+      />
     </div>
   );
 }

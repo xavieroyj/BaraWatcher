@@ -2,10 +2,10 @@
 import { useLottie } from "lottie-react";
 
 type Props = {
-    animationdata:any
+    animationdata: unknown;
 };
 
-const lottieAnimation = ({animationdata}: Props) => {
+function LottieAnimation({animationdata}: Props) {
   const options = {
     animationData: animationdata,
     loop: true,
@@ -14,6 +14,6 @@ const lottieAnimation = ({animationdata}: Props) => {
   const { View } = useLottie(options);
 
   return <>{View}</>;
-};
+}
 
-export default lottieAnimation;
+export default LottieAnimation;

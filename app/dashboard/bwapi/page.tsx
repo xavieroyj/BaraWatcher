@@ -10,7 +10,6 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from 'lucide-react'
-import { set } from 'date-fns'
 import { QuotaPurchaseOptions } from './quotapurchaseoptions'
 
 const apiOptions = [
@@ -31,7 +30,7 @@ export default function ApiTester() {
   const [method, setMethod] = useState('POST')
   const [response, setResponse] = useState('')
   const [quota, setQuota] = useState<{ used: number; total: number } | null>(null)
-  const [quotaError, setQuotaError] = useState<string | null>(null)
+  const [quotaError] = useState<string | null>(null)
 
   useEffect(() => {
     fetchQuota()
@@ -41,7 +40,7 @@ export default function ApiTester() {
     setQuota({ used: 512, total: 1000 })
   }
 
-  let sampleResponse = {
+  const sampleResponse = {
     "note": "During and after his term as President of the United States, Donald Trump made tens of thousands of false or misleading claims.",
     "source": "https://en.wikipedia.org/wiki/False_or_misleading_statements_by_Donald_Trump",
     "date": "2021-10-10",

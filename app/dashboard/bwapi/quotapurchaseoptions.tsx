@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/hooks/use-toast"
-import { ethers } from "ethers"
 import { Web3Provider } from "@ethersproject/providers"
 
 const quotaOptions = [
@@ -20,6 +19,7 @@ export function QuotaPurchaseOptions({ setQuota }: QuotaPurchaseOptionsProps) {
   const [isPurchasing, setIsPurchasing] = useState(false)
 
   const handlePurchase = async (amount: number, price: number) => {
+    console.log(price); 
     setIsPurchasing(true)
     try {
       if (amount == 10) {

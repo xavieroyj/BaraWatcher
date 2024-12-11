@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -45,7 +44,7 @@ export default function ContactPage() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit() {
     setIsSubmitting(true)
     // Simulate API call
     setTimeout(() => {
@@ -65,7 +64,7 @@ export default function ContactPage() {
     <div className="grid gap-6 lg:grid-cols-2 w-3/5 mx-auto">
       <div>
         <p className="text-lg mb-4">
-        We'd love to hear from you. Please fill out the form below or use our contact information.
+        We love to hear from you. Please fill out the form below or use our contact information.
         </p>
         <div className="space-y-4">
         <div className="flex items-center space-x-2">

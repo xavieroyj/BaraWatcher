@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { createValidationRequest, getValidationRequests, getValidationRequestById } from "@/app/actions/validationRequest";
+import { getValidationRequestById } from "@/app/actions/validationRequest";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-export async function GET(request: Request, { params }: any) {
+export async function GET(request: Request, { params }: Params) {
   try {
     // Check if an ID is provided in params
     if (params?.id) {

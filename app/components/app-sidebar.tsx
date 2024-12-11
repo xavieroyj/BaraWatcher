@@ -14,7 +14,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Home, History, Settings, Loader2, Lock, Globe } from "lucide-react";
+import { Book, Home, Loader2, Lock, Globe } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/app/images/logowhite.png";
@@ -22,7 +22,6 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
-import path from "path";
 
 const items = [
     {

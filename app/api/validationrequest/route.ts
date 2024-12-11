@@ -2,7 +2,7 @@ import { createValidationRequest, getValidationRequests } from "@/app/actions/va
 import { NextResponse } from "next/server";
 import { ValidationRequestStatus, ValidationRequestType } from "@prisma/client";
 
-export async function GET(request: Request) {
+export async function GET() {
 	const validationRequests = await getValidationRequests();
 	return NextResponse.json(validationRequests);
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { ValidationRequest, ValidationRequestStatus, ValidationRequestType } from "@prisma/client";
+import { ValidationRequestStatus, ValidationRequestType } from "@prisma/client";
 
 export async function createValidationRequest(data: {
   status: ValidationRequestStatus;
@@ -25,9 +25,9 @@ export async function getValidationRequestById(id: number) {
       where: { id: id }, 
     });
     return validationRequest;
-  } catch (error) {
-    console.error("Database error:", error);
-    throw error;
+  } catch {
+    console.error("Database error occurred while fetching request by ID.");
+    throw new Error("Failed to fetch validation request");
   }
 }
 
@@ -36,10 +36,11 @@ export async function validateRequest(id: number) {
     await prisma.validationRequest.update({
       where: { id },
       data: { status: "VALIDATED" }
-    })
-    return { success: true }
-  } catch (error) {
-    return { success: false, error: "Failed to validate request" }
+    });
+    return { success: true };
+  } catch {
+    console.error("Validation error occurred.");
+    return { success: false, error: "Failed to validate request" };
   }
 }
 
@@ -48,9 +49,10 @@ export async function rejectRequest(id: number) {
     await prisma.validationRequest.update({
       where: { id },
       data: { status: "REJECTED" }
-    })
-    return { success: true }
-  } catch (error) {
-    return { success: false, error: "Failed to reject request" }
+    });
+    return { success: true };
+  } catch {
+    console.error("Rejection error occurred.");
+    return { success: false, error: "Failed to reject request" };
   }
 }

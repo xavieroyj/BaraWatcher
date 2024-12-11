@@ -39,13 +39,14 @@ export default function RegisterPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      const { data, error } = await authClient.signUp.email({
+      const { error } = await authClient.signUp.email({
         email: values.email,
         password: values.password,
         name: values.name,
       });
 
       if (error) throw error;
+      console.log(error); 
       router.push("/login");
     } catch (error) {
       console.error(error);
@@ -76,7 +77,7 @@ export default function RegisterPage() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              "Join our community in the fight against malware and cyber threats. Together, we can make the digital world safer."
+              Join our community in the fight against malware and cyber threats. Together, we can make the digital world safer.
             </p>
           </blockquote>
         </div>

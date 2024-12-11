@@ -43,7 +43,7 @@ export default function LoginPage() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             setIsLoading(true);
-            const { data, error } = await authClient.signIn.email(
+            const { error } = await authClient.signIn.email(
                 {
                     email: values.email,
                     password: values.password,
@@ -70,7 +70,7 @@ export default function LoginPage() {
     const signInWithGoogle = async () => {
         try {
             setIsLoading(true);
-            const { data, error } = await authClient.signIn.social({
+            const { error } = await authClient.signIn.social({
                 provider: "google",
                 callbackURL: "/dashboard",
             });
@@ -285,7 +285,7 @@ export default function LoginPage() {
                         )}
                     </Button>
                     <p className="px-8 text-center text-sm text-muted-foreground">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <Link
                             href="/register"
                             className="underline underline-offset-4 hover:text-primary"

@@ -15,7 +15,7 @@ export default function Navbar() {
   const { 
     data: session, 
     isPending,
-    error
+    // error // Commented out since it's not used
   } = authClient.useSession() 
 
   if (isDashboardRoute || isLoginRoute || isRegisterRoute) { 
